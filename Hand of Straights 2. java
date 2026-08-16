@@ -1,0 +1,31 @@
+class Solution {
+    public boolean isNStraightHand(int[] hand, int groupSize) {
+        int handSize = hand.length;
+        if (handSize % groupSize != 0) {
+            return false;
+        }
+        Arrays.sort(hand);
+        int i = 0;
+        while (i < handSize) {
+            if (hand[i] >= 0) {
+                if (!find(hand, groupSize, i, handSize)) {
+                    return false;
+                }
+            }
+            i++;
+        }
+        return true;
+    }
+    private boolean find(int[] hand, int groupSize, int i, int handSize) {
+        int next = hand[i];
+        int count = 0;
+        for (int j = i; j < handSize && count < groupSize; j++) {
+            if (hand[j] == next) {
+                next++;
+                hand[j] = -1;
+                count++;
+            }
+        }
+        return count == groupSize;
+    }
+}
